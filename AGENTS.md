@@ -16,7 +16,7 @@
 
 ## Bounded Agent Skills guidance
 
-Use `addyosmani/agent-skills` only as bounded domain guidance for:
+Use `agent-skills` only as bounded domain guidance for:
 
 - `source-driven-development`
 - `api-and-interface-design` when defining module boundaries or extension interfaces
