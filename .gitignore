@@ -4,7 +4,7 @@ RESI.pdf
 fixtures/
 test-fixtures/
 tmp/
-.worktrees/
+.worktrees
 
 # Dependencies and build/test output
 node_modules/
