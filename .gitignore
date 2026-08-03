@@ -4,6 +4,7 @@ RESI.pdf
 fixtures/
 test-fixtures/
 tmp/
+.worktrees/
 
 # Dependencies and build/test output
 node_modules/
@@ -25,4 +26,3 @@ Thumbs.db
 *.swo
 .idea/
 .vscode/
-
