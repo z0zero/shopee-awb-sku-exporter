@@ -1,0 +1,28 @@
+# Local shipping-label fixtures and any generated PDFs. Never commit real label data.
+RESI.pdf
+*.pdf
+fixtures/
+test-fixtures/
+tmp/
+
+# Dependencies and build/test output
+node_modules/
+dist/
+build/
+coverage/
+.parcel-cache/
+.cache/
+
+# Environment and local configuration
+.env
+.env.*
+!.env.example
+
+# OS/editor artifacts
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+
