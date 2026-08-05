@@ -48,6 +48,13 @@ workflow artifact. Open a completed workflow run on GitHub and download its
 artifact; the downloaded artifact contains the extension ZIP with the manifest
 version included.
 
+After a successful push to `main`, or a manual run selected on `main`, a
+separate job updates the initialized `Release` branch so it contains the same
+`shopee-awb-sku-exporter.zip` package. Pull-request runs remain build-only and
+cannot publish. The publisher uses job-scoped `contents: write` permission and
+GitHub's `createCommitOnBranch` mutation, which automatically signs the
+versioned publish commit and marks it as verified.
+
 ## Load the unpacked extension
 
 Chrome:
@@ -186,3 +193,4 @@ keeps the selected bytes and extracted result in memory only.
 - [GitHub Actions workflow artifacts](https://docs.github.com/en/actions/concepts/workflows-and-actions/workflow-artifacts)
 - [actions/setup-node](https://github.com/actions/setup-node)
 - [actions/upload-artifact](https://github.com/actions/upload-artifact)
+- [GitHub `createCommitOnBranch`](https://docs.github.com/en/graphql/reference/mutations#createcommitonbranch)

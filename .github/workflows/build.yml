@@ -15,6 +15,8 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      extension-version: ${{ steps.version.outputs.extension-version }}
 
     steps:
       - name: Check out repository
@@ -85,3 +87,66 @@ jobs:
           path: shopee-awb-sku-exporter.zip
           if-no-files-found: error
           retention-days: 30
+
+  publish:
+    needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    concurrency:
+      group: release-branch-publish
+      cancel-in-progress: false
+
+    steps:
+      - name: Download extension package
+        uses: actions/download-artifact@v4
+        with:
+          name: shopee-awb-sku-exporter.zip
+          path: ${{ runner.temp }}/release-package
+
+      - name: Publish package to Release branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_BRANCH: Release
+          EXTENSION_VERSION: ${{ needs.build.outputs.extension-version }}
+        shell: bash
+        run: |
+          package_name="shopee-awb-sku-exporter.zip"
+          package_path="$RUNNER_TEMP/release-package/$package_name"
+          test -f "$package_path"
+
+          package_blob="$(git hash-object "$package_path")"
+          current_blob="$(gh api "repos/$GITHUB_REPOSITORY/contents/$package_name?ref=$RELEASE_BRANCH" --jq '.sha' 2>/dev/null || true)"
+          if [[ "$package_blob" == "$current_blob" ]]; then
+            echo "Release branch already contains v$EXTENSION_VERSION."
+            exit 0
+          fi
+
+          head_oid="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/$RELEASE_BRANCH" --jq '.object.sha')"
+          package_contents="$(base64 -w 0 "$package_path")"
+          headline="build: publish v$EXTENSION_VERSION"
+
+          jq -n \
+            --arg repository "$GITHUB_REPOSITORY" \
+            --arg branch "refs/heads/$RELEASE_BRANCH" \
+            --arg expected_head_oid "$head_oid" \
+            --arg headline "$headline" \
+            --arg path "$package_name" \
+            --arg contents "$package_contents" \
+            '{
+              query: "mutation($input: CreateCommitOnBranchInput!) { createCommitOnBranch(input: $input) { commit { oid url } } }",
+              variables: {
+                input: {
+                  branch: {
+                    repositoryNameWithOwner: $repository,
+                    refName: $branch
+                  },
+                  expectedHeadOid: $expected_head_oid,
+                  message: { headline: $headline },
+                  fileChanges: {
+                    additions: [{ path: $path, contents: $contents }]
+                  }
+                }
+              }
+            }' | gh api graphql --input -
