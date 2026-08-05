@@ -29,6 +29,11 @@ describe('build workflow policy', () => {
     expect(workflow).toContain('GH_TOKEN: ${{ github.token }}');
     expect(workflow).toContain('createCommitOnBranch');
     expect(workflow).toContain('gh api graphql --input -');
+    expect(workflow).toContain(
+      'base64 -w 0 "$package_path" > "$encoded_package_path"',
+    );
+    expect(workflow).toContain('--rawfile contents "$encoded_package_path"');
+    expect(workflow).not.toContain('--arg contents "$package_contents"');
     expect(workflow).toContain('build: publish v$EXTENSION_VERSION');
     expect(workflow).not.toContain('git commit -m');
     expect(workflow).not.toContain('secrets.PAT');
