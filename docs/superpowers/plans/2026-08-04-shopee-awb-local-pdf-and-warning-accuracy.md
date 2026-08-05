@@ -8,7 +8,7 @@
 
 **Tech Stack:** TypeScript 6.0.2, npm 11.4.1, esbuild 0.28.1, Vitest 4.1.10, jsdom 29.1.1, PDF.js `pdfjs-dist` 6.2.108, Chrome/Edge Manifest V3 APIs, and minimal HTML/CSS.
 
-**Approval gate:** This plan is awaiting explicit user approval. Do not modify implementation code until that approval is recorded.
+**Approval gate:** Approved by the user 2026-08-05. Implementation proceeds in the existing worktree; do not integrate into `main` without an explicit branch-completion choice.
 
 ## Global Constraints
 

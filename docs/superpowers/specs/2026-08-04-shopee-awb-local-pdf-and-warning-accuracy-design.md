@@ -1,7 +1,7 @@
 # Shopee AWB Local PDF and Warning Accuracy Design
 
 **Date:** 2026-08-04
-**Status:** Approved 2026-08-04; implementation plan pending explicit approval
+**Status:** Approved 2026-08-04; implementation plan approved 2026-08-05
 **Scope:** Correct false PDF row warnings and add user-selected local PDF scanning to the existing Chrome and Microsoft Edge Manifest V3 extension
 
 ## Relationship to the v1 design
