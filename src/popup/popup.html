@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shopee AWB SKU Exporter</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="popup" aria-labelledby="title">
+      <h1 id="title">Shopee AWB SKU Exporter</h1>
+      <button id="scan-button" type="button">Scan current AWB</button>
+      <button id="choose-pdf-button" type="button">
+        Choose downloaded PDF
+      </button>
+
+      <p id="status" role="status" aria-live="polite">Ready to scan.</p>
+
+      <section aria-labelledby="summary-heading">
+        <h2 id="summary-heading">Summary</h2>
+        <ul id="summary-list"></ul>
+      </section>
+
+      <section aria-labelledby="warnings-heading">
+        <h2 id="warnings-heading">Warnings</h2>
+        <ul id="warnings-list"></ul>
+      </section>
+
+      <label id="partial-acknowledgement-label" hidden>
+        <input id="partial-acknowledgement" type="checkbox" />
+        I reviewed every warning and want to download the partial result.
+      </label>
+
+      <button id="download-button" type="button" disabled>Download CSV</button>
+    </main>
+    <script src="popup.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Shopee AWB SKU Exporter",
+  "description": "Scan Shopee Seller AWB print documents and export SKU quantities as CSV.",
+  "version": "0.1.0",
+  "minimum_chrome_version": "125",
+  "permissions": ["downloads"],
+  "host_permissions": ["https://seller.shopee.co.id/*"],
+  "action": {
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://seller.shopee.co.id/awbprint*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["vendor/pdf.worker.min.mjs"],
+      "matches": ["https://seller.shopee.co.id/*"]
+    }
+  ]
+}

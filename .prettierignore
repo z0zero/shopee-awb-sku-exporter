@@ -1,0 +1,9 @@
+dist
+coverage
+node_modules
+.worktrees
+tmp
+.superpowers
+AGENTS.md
+docs/superpowers/plans
+docs/superpowers/specs

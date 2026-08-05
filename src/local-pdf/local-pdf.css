@@ -1,0 +1,86 @@
+:root {
+  color-scheme: light;
+  font-family: system-ui, sans-serif;
+  background: #f7f8fa;
+  color: #182230;
+}
+
+body {
+  margin: 0;
+}
+
+.local-pdf {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: 1.35rem;
+}
+
+h2 {
+  font-size: 1rem;
+}
+
+input[type='file'] {
+  min-height: 2.5rem;
+  font: inherit;
+}
+
+button {
+  min-height: 2.5rem;
+  border: 1px solid #1c5fd4;
+  border-radius: 0.35rem;
+  background: #1c5fd4;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  padding: 0.5rem 0.75rem;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid #ffbf47;
+  outline-offset: 2px;
+}
+
+button:disabled,
+input:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+section {
+  border-top: 1px solid #d7dce3;
+  padding-top: 0.65rem;
+}
+
+ul {
+  margin: 0.35rem 0 0;
+  padding-left: 1.25rem;
+}
+
+#status {
+  min-height: 1.25rem;
+}
+
+#warnings-list:empty::before {
+  color: #596574;
+  content: 'No warnings.';
+}
+
+label {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  font-size: 0.9rem;
+}

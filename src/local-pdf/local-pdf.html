@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Scan downloaded Shopee AWB PDF</title>
+    <link rel="stylesheet" href="local-pdf.css" />
+  </head>
+  <body>
+    <main class="local-pdf" aria-labelledby="title">
+      <h1 id="title">Scan a downloaded Shopee AWB PDF</h1>
+      <p id="instructions">
+        Choose one downloaded PDF to extract SKU quantities on this device.
+      </p>
+      <label for="pdf-file">Downloaded AWB PDF</label>
+      <input id="pdf-file" type="file" accept="application/pdf,.pdf" />
+
+      <p id="status" role="status" aria-live="polite">
+        Choose a downloaded Shopee AWB PDF.
+      </p>
+
+      <section aria-labelledby="summary-heading">
+        <h2 id="summary-heading">Summary</h2>
+        <ul id="summary-list"></ul>
+      </section>
+
+      <section aria-labelledby="warnings-heading">
+        <h2 id="warnings-heading">Warnings</h2>
+        <ul id="warnings-list"></ul>
+      </section>
+
+      <label id="partial-acknowledgement-label" hidden>
+        <input id="partial-acknowledgement" type="checkbox" />
+        I reviewed every warning and want to download the partial result.
+      </label>
+
+      <button id="download-button" type="button" disabled>Download CSV</button>
+    </main>
+    <script src="local-pdf.js" defer></script>
+  </body>
+</html>

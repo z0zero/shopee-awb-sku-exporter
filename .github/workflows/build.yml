@@ -1,0 +1,87 @@
+name: Build extension
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.0
+          cache: npm
+
+      - name: Read and validate extension version
+        id: version
+        shell: bash
+        run: |
+          version="$(node --input-type=module -e "import { readFileSync } from 'node:fs'; const manifest = JSON.parse(readFileSync('src/manifest.json', 'utf8')); const packageJson = JSON.parse(readFileSync('package.json', 'utf8')); if (manifest.version !== packageJson.version) { throw new Error('package.json and src/manifest.json versions differ'); } process.stdout.write(manifest.version);")"
+          echo "extension-version=$version" >> "$GITHUB_OUTPUT"
+          {
+            echo "### Shopee AWB SKU Exporter"
+            echo "- Version: `$version`"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Prepare esbuild
+        run: npm run deps:prepare
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      - name: Build extension
+        run: npm run build
+
+      - name: Test packaged build
+        run: npm run test:dist
+
+      - name: Verify packaged version
+        env:
+          EXTENSION_VERSION: ${{ steps.version.outputs.extension-version }}
+        shell: bash
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+
+          const manifest = JSON.parse(readFileSync('dist/manifest.json', 'utf8'));
+          if (manifest.version !== process.env.EXTENSION_VERSION) {
+            throw new Error(`Built manifest version ${manifest.version} does not match ${process.env.EXTENSION_VERSION}`);
+          }
+          NODE
+
+      - name: Package extension
+        shell: bash
+        run: |
+          cd dist
+          zip -r ../shopee-awb-sku-exporter.zip .
+
+      - name: Upload extension package
+        uses: actions/upload-artifact@v4
+        with:
+          name: shopee-awb-sku-exporter.zip
+          path: shopee-awb-sku-exporter.zip
+          if-no-files-found: error
+          retention-days: 30

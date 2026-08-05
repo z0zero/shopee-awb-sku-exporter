@@ -1,0 +1,40 @@
+{
+  "name": "shopee-awb-sku-exporter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "npm@11.4.1",
+  "engines": {
+    "node": "^22.13.0 || >=24.0.0"
+  },
+  "scripts": {
+    "build": "tsx scripts/build.ts",
+    "deps:prepare": "npm rebuild esbuild --ignore-scripts=false",
+    "test": "vitest run",
+    "test:dist": "vitest run --config vitest.dist.config.ts",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format:check": "prettier --check .",
+    "verify:fixture": "tsx scripts/verify-resi.ts",
+    "verify": "npm run format:check && npm run typecheck && npm run lint && npm test && npm run build && npm run test:dist"
+  },
+  "dependencies": {
+    "pdfjs-dist": "6.2.108"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/chrome": "0.2.5",
+    "@types/jsdom": "28.0.3",
+    "@types/node": "22.20.1",
+    "esbuild": "0.28.1",
+    "eslint": "10.8.0",
+    "globals": "17.9.0",
+    "jsdom": "29.1.1",
+    "prettier": "3.9.6",
+    "tsx": "4.23.5",
+    "typescript": "6.0.2",
+    "typescript-eslint": "8.65.0",
+    "vitest": "4.1.10"
+  }
+}
