@@ -34,6 +34,9 @@ describe('build workflow policy', () => {
     );
     expect(workflow).toContain('--rawfile contents "$encoded_package_path"');
     expect(workflow).not.toContain('--arg contents "$package_contents"');
+    expect(workflow).toContain('--arg branch "$RELEASE_BRANCH"');
+    expect(workflow).toContain('branchName: $branch');
+    expect(workflow).not.toContain('refName: $branch');
     expect(workflow).toContain('build: publish v$EXTENSION_VERSION');
     expect(workflow).not.toContain('git commit -m');
     expect(workflow).not.toContain('secrets.PAT');

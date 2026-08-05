@@ -130,7 +130,7 @@ jobs:
 
           jq -n \
             --arg repository "$GITHUB_REPOSITORY" \
-            --arg branch "refs/heads/$RELEASE_BRANCH" \
+            --arg branch "$RELEASE_BRANCH" \
             --arg expected_head_oid "$head_oid" \
             --arg headline "$headline" \
             --arg path "$package_name" \
@@ -141,7 +141,7 @@ jobs:
                 input: {
                   branch: {
                     repositoryNameWithOwner: $repository,
-                    refName: $branch
+                    branchName: $branch
                   },
                   expectedHeadOid: $expected_head_oid,
                   message: { headline: $headline },
